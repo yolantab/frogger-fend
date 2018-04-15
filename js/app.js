@@ -1,6 +1,7 @@
 // Enemies our player must avoid
 
-
+var counter = 0;
+var count = document.getElementById("counter");
 var Enemy = function(x, y) {
     this.x = x;
     this.y = y;
@@ -15,9 +16,12 @@ var Enemy = function(x, y) {
 
 };
 var enemy1 = new Enemy(1, 50);
-var enemy2 = new Enemy(20, 150);
-var enemy3 = new Enemy(10, 230);
-
+var enemy2 = new Enemy(-200, 50);
+var enemy3 = new Enemy(20, 150);
+var enemy4 = new Enemy(10, 230);
+var enemy5 = new Enemy(-200, 230);
+enemy1.speed = enemy2.speed;
+enemy4.speed = enemy5.speed;
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 
@@ -27,6 +31,7 @@ Enemy.prototype.update = function(dt) {
         this.x = -50;
     else
         this.x = this.x + this.speed * dt;
+
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
@@ -36,7 +41,6 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -54,20 +58,53 @@ var Player = function() {
 // Place the player object in a variable called player
 
 var player = new Player();
-var allEnemies = [enemy1, enemy2, enemy3];
+var allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5];
 
 
 Player.prototype.update = function(dt) {
+    // don't allow player to  move out of the board
+    if (this.x >= 430 || this.x <= -30) {
+        if (this.x >= 430) {
+            this.x -= 30;
+        } else if (this.x <= -30) {
+            this.x += 30;
+        }
 
+    }
+    if (this.y <= -30 || this.y >= 430) {
+        if (this.y <= -30) {
+            counter += 1;
+            count.innerHTML = `counter: ${counter}`;
+            this.reset();
+        } else {
+            this.reset();
+
+        }
+    }
 };
+
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// reset player position
+Player.prototype.reset = function() {
+        this.x = 200;
+        this.y = 400;
+    }
+    //move player
+player.handleInput = function(key) {
 
-
-player.handleInput = function() {
+    if (key === 'left') {
+        this.x -= 30;
+    } else if (key === 'right') {
+        this.x += 30;
+    } else if (key === 'up') {
+        this.y -= 30;
+    } else if (key === 'down') {
+        this.y += 30;
+    }
 
 }
 
@@ -84,3 +121,4 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+7

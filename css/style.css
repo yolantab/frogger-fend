@@ -1,3 +1,12 @@
-body {
-    text-align: center;
-}
+    body {
+        text-align: center;
+    }
+    
+    #counter {
+        width: 505px;
+        margin-left: 24%;
+        text-align: left;
+        padding-top: 7px;
+        position: absolute;
+        font-size: 2em;
+    }
