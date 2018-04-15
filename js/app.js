@@ -2,11 +2,10 @@
 
 
 var Enemy = function(x, y) {
-
-
     this.x = x;
     this.y = y;
-    this.speed = 150;
+    //rtandom spee between 80 and 120 (120-80=40)
+    this.speed = Math.floor(Math.random() * 41) + 80;
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -15,11 +14,19 @@ var Enemy = function(x, y) {
     this.sprite = 'images/enemy-bug.png';
 
 };
-
+var enemy1 = new Enemy(1, 50);
+var enemy2 = new Enemy(20, 150);
+var enemy3 = new Enemy(10, 230);
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
+
+//loop enemies
 Enemy.prototype.update = function(dt) {
+    if (this.x >= 500)
+        this.x = -50;
+    else
+        this.x = this.x + this.speed * dt;
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
@@ -47,7 +54,7 @@ var Player = function() {
 // Place the player object in a variable called player
 
 var player = new Player();
-var allEnemies = [];
+var allEnemies = [enemy1, enemy2, enemy3];
 
 
 Player.prototype.update = function(dt) {
