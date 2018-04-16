@@ -5,27 +5,29 @@ var count = document.getElementById("counter");
 var Enemy = function(x, y) {
     this.x = x;
     this.y = y;
-    //rtandom spee between 80 and 120 (120-80=40)
+    //rtandom speed between 70 and 110 (110-70=40)
     this.speed = Math.floor(Math.random() * 41) + 70;
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    // The image/sprite for our enemies
     this.sprite = 'images/enemy-bug.png';
 
 };
+
+//1 row enemies
 var enemy1 = new Enemy(1, 50);
 var enemy2 = new Enemy(-250, 50);
+//2th row
 var enemy3 = new Enemy(20, 150);
+//3th row
 var enemy4 = new Enemy(10, 230);
 var enemy5 = new Enemy(-200, 230);
+
 enemy1.speed = enemy2.speed;
 enemy4.speed = enemy5.speed;
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 
-//loop enemies
+//Loop enemies when they reach the right edge of the board
 Enemy.prototype.update = function(dt) {
     if (this.x >= 500)
         this.x = -50;
@@ -42,11 +44,10 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// place all enemies in an array
 var allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5];
 
+//player 
 var Player = function() {
     this.x = 200;
     this.y = 400;
@@ -54,16 +55,13 @@ var Player = function() {
 
 };
 
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var player = new Player();
 
 
 
 Player.prototype.update = function(dt) {
-    // don't allow player to  move out of the board
+    //Player can not move off board
 
     if (this.x >= 430 || this.x <= -30) {
         if (this.x >= 430) {
@@ -74,7 +72,7 @@ Player.prototype.update = function(dt) {
 
     }
     this.checkCollisions();
-
+    // increase counter if player reaches the water
     if (this.y <= -30 || this.y >= 430) {
         if (this.y <= -30) {
             counter += 1;
@@ -92,7 +90,8 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// collisions with enemy
+// player's position and score points are reset 
+//when the player collides with one of the enemy
 
 Player.prototype.checkCollisions = function() {
     for (var i = 0; i < allEnemies.length; i++) {
@@ -108,12 +107,12 @@ Player.prototype.checkCollisions = function() {
     }
 };
 
-// reset player position
+// reset player position function
 Player.prototype.reset = function() {
     this.x = 200;
     this.y = 400;
 };
-//move player
+//move the player with arrow keys
 player.handleInput = function(key) {
 
     if (key === 'left') {
@@ -127,13 +126,6 @@ player.handleInput = function(key) {
     }
 
 };
-
-
-
-
-
-
-
 
 
 // This listens for key presses and sends the keys to your
