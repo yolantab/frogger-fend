@@ -3,14 +3,62 @@
         background-image: url(../images/ss038.jpg)
     }
     
-    #counter {
+    #score-panel {
         width: 505px;
-          left: 0; 
-  right: 0; 
-  margin-left: auto; 
-  margin-right: auto; 
-        text-align: left;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
         padding-top: 7px;
         position: fixed;
         font-size: 2em;
+    }
+    
+    #counter {
+        float: left;
+        text-align: left;
+    }
+    
+    #lives {
+        float: right;
+        text-align: right;
+        color: red;
+    }
+    
+    ul {
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+    }
+    
+    li {
+        list-style: none;
+        display: inline-block;
+    }
+    
+    #game-over {
+        width: 505px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        position: fixed;
+        font-size: 2em;
+        background-color: black;
+        opacity: 0.7;
+        transition: 400ms;
+        overflow: hidden;
+        height: 0%;
+        color: white;
+        text-align: center;
+        font-family: 'Gloria Hallelujah', cursive;
+        z-index: 1;
+    }
+    
+    #finalScore {
+        display: inline-block;
+    }
+    
+    #playAgain {
+        cursor: pointer;
     }

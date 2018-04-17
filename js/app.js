@@ -1,7 +1,15 @@
-// Enemies our player must avoid
-
+//score panel 
 var counter = 0;
 var count = document.getElementById("counter");
+var playAg = document.getElementById("playAgain");
+var lives = 3;
+var hearts = document.getElementById("hearts");
+var heart3 = hearts.getElementsByTagName('li')[2]; //last heart
+var heart2 = hearts.getElementsByTagName('li')[1]; //second heart
+var heart1 = hearts.getElementsByTagName('li')[0]; //first heart
+
+var gover = document.getElementById("game-over");
+// Enemies our player must avoid
 var Enemy = function(x, y) {
     this.x = x;
     this.y = y;
@@ -55,6 +63,19 @@ var Player = function() {
 
 };
 
+// remove one heart from panel
+var removelives = function() {
+    if (lives === 2) {
+        hearts.removeChild(heart3);
+
+    } else if (lives === 1) {
+        hearts.removeChild(heart2);
+
+    } else if (lives === 0) {
+        hearts.removeChild(heart1);
+    }
+};
+
 // Place the player object in a variable called player
 var player = new Player();
 
@@ -90,9 +111,19 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+
+var gameOver = function() {
+    //display score panel when player runs out of lives
+    gover.style.height = "90%";
+    //reset lives, hearts and counter
+    lives = 3;
+    hearts.appendChild(heart1);
+    hearts.appendChild(heart2);
+    hearts.appendChild(heart3);
+    counter = 0;
+};
 // player's position and score points are reset 
 //when the player collides with one of the enemy
-
 Player.prototype.checkCollisions = function() {
     for (var i = 0; i < allEnemies.length; i++) {
 
@@ -101,8 +132,25 @@ Player.prototype.checkCollisions = function() {
             this.y < allEnemies[i].y + 65 &&
             65 + this.y > allEnemies[i].y) {
             this.reset();
-            counter = 0;
-            count.innerHTML = `score: ${counter}`;
+            lives -= 1; //remove one life
+            removelives(); //remove heart
+            //display panel when player run out of lives
+            if (lives === 0) {
+                // player reached the water at least once
+                if (counter > 0) {
+                    finalScore.innerHTML = `Your score:  ${counter}`;
+                    gameOver();
+                    this.reset();
+                } else {
+                    //player never reached the water
+                    finalScore.innerHTML = `Better luck next time `;
+                    gameOver();
+                    this.reset();
+
+                }
+            }
+
+            count.innerHTML = `score: ${ counter }`;
         }
     }
 };
@@ -139,4 +187,8 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
+});
+//hide panel when player clicks restart button
+playAg.addEventListener("click", function() {
+    gover.style.height = "0%"
 });

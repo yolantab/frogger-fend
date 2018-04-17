@@ -5,10 +5,28 @@
     <meta charset="UTF-8">
     <title>Effective JavaScript: Frogger</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div id="counter">score: </div>
+    <div id="game-over">
+        <p id="finalScore">Your score:&ensp;</p>
+        <p id="playAgain">
+            Play again:
+            <i class="fas fa-redo"></i>
+        </p>
+    </div>
+    <div id="score-panel">
+        <div id="counter">score: </div>
+        <div id="lives">
+            <ul id="hearts">
+                <li><i class="fas fa-heart"></i>&nbsp;</li>
+                <li><i class="fas fa-heart"></i>&nbsp;</li>
+                <li><i class="fas fa-heart"></i>&nbsp;</li>
+            </ul>
+        </div>
+    </div>
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
